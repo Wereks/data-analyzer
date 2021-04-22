@@ -1,5 +1,4 @@
 from main import *
-import json
 
 db = DB()
 users = db.users()
