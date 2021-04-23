@@ -1,20 +1,25 @@
 from main import *
 
-db = DB()
-users = db.users()
-posts = db.posts()
+def change_ids_to_names(users):
+    """Changes the usual format of closests to use names instead of ids"""
+    users_objects = objectify(users, User)
+    match_id_name = {user.id: user.name for user in users_objects}
+    closests_with_names = []
+    for id_, closests_id in closests.items():
+        closests_list = [match_id_name[id_] for id_ in closests_id]
+        closests_with_names.append((match_id_name[id_], closests_list))
 
-print(count(users, posts))
-print(non_unique(posts))
+    return closests_with_names
 
-closests = closests_ones(users)
-print(closests)
+if __name__ == "__main__":
+    db = DB()
+    users = db.users()
+    posts = db.posts()
 
-users_objects = objectify(users, User)
-match_id_name = {user.id: user.name for user in users_objects}
-closests_with_names = []
-for id_, closests_id in closests.items():
-    closests_list = [match_id_name[id_] for id_ in closests_id]
-    closests_with_names.append((match_id_name[id_], closests_list))
+    print(count(users, posts))
+    print(non_unique(posts))
 
-print(closests_with_names)
+    closests = closests_ones(users)
+    print(closests)
+    print(change_ids_to_names(users))
+
