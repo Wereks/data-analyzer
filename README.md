@@ -1,6 +1,8 @@
 Module which lets you retrieve data of users and posts from  jsonplaceholder.typicode.com. 
-Functions which lets you count number of posts made by an user,  pair the closests users by their geolocations and count the nonunique number of post titles.
-The module also provides dataclasses in which you can store the dictionaries representing user/address/geolocation points and post in an object.
+
+Functions to count number of posts made by an user,  pair the closests users by their geolocations and count the nonunique number of post titles.
+
+The module also provides dataclasses where you can store the dictionaries representing user/address/geolocation points and post in an object.
 
 To use the module you need to:
 
