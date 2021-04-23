@@ -3,6 +3,7 @@ Functions which lets you count number of posts made by an user,  pair the closes
 The module also provides dataclasses in which you can store the dictionaries representing user/address/geolocation points and post in an object.
 
 To use the module you need to:
+
 **Before you start, if you're a windows user, make sure your environment in which python is installed, supports scipy**
 1. Install pipenv, with the command `pip install pipenv`
 2. Install all the dependencies (and the setup.py), with the  command `pipenv install`
