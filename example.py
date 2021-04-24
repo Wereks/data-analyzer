@@ -22,4 +22,3 @@ if __name__ == "__main__":
     closests = closests_ones(users)
     print(closests)
     print(change_ids_to_names(users))
-
