@@ -1,6 +1,6 @@
 from main import *
 
-def change_ids_to_names(users):
+def change_ids_to_names(closests, users):
     """Changes the usual format of closests to use names instead of ids"""
     users_objects = objectify(users, User)
     match_id_name = {user.id: user.name for user in users_objects}
@@ -21,4 +21,4 @@ if __name__ == "__main__":
 
     closests = closests_ones(users)
     print(closests)
-    print(change_ids_to_names(users))
+    print(change_ids_to_names(closests, users))
