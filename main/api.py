@@ -1,4 +1,6 @@
 from copy import deepcopy
+import json
+from functools import partialmethod
 
 import requests
 
@@ -8,17 +10,34 @@ class DB:
         self._users = None
         self._posts = None
 
-    def _get(self, url):
-        return requests.get(url, headers=self.headers).json()
+    def _get(self, name, local=False, refresh=False):
+        """Gets data from the {name} attribute
+        :param name: name of the attribute to get
+        :param local: (optional) if ``True``, the data will come from the local storage containing data from last successful response Defaults: ``False``
+        :param refresh: (optional) if ``True``, the data will be downloaded from the external API (ignored if local is ``True``) Defaults: ``False``
+        :rtype list
+        """
+        a_name = f'_{name}'
+        if local:
+            setattr(self, a_name, self._load(name))
+        elif refresh or getattr(self, a_name) is None:
+            response = requests.get(f'https://jsonplaceholder.typicode.com/{name}', headers=self.headers)
+            json_ = response.json()
+            setattr(self, a_name, json_)
+            self._save(name, json_)
 
-    def users(self, refresh=False):
-        if refresh or self._users is None:
-            self._users = self._get("https://jsonplaceholder.typicode.com/users")
+        return deepcopy(getattr(self, a_name))
 
-        return deepcopy(self._users)
+    def users(self, local=False, refresh=False):
+        return self._get('users', local, refresh)
 
-    def posts(self, refresh=False):
-        if refresh or self._posts is None:
-            self._posts = self._get("https://jsonplaceholder.typicode.com/posts")
+    def posts(self, local=False, refresh=False):
+        return self._get('posts', local, refresh)
 
-        return deepcopy(self._posts)    
+    def _load(self, name):
+        with open(f'./main/db/{name}.json') as f:
+            return json.load(f)
+
+    def _save(self, name, json_):
+        with open(f'./main/db/{name}.json', mode='w') as f:
+            return json.dump(json_, f)
